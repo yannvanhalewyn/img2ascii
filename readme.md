@@ -11,8 +11,10 @@ There's a simple make file in the repo. Mac user's can just run 'make' to build 
   * curlpp      - a library for c++ to execute HTTP requests
   * cimg        - A c++ library for parsing images
 
-Using
+Usage
 -----
+
+NOTE: Best results are attained when letting the software optimize the resolution by itself. This aims for a textfile with a width of about 1000 chars. Opening the textfile in text-edit or notepad, and reducing the font-size to a minimum is required to enjoy this beautiful art.
 
 Here's a simple usage example:
 
