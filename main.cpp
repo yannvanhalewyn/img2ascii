@@ -16,7 +16,6 @@ namespace opt = boost::program_options;
 #define RED_COEFF 0.2125
 #define GREEN_COEFF 0.7154
 #define BLUE_COEFF 0.0721
-#define TMP_FILE "tmp.jpg"
 
 /*
  * This function parses the command line arguments using boost's program options
@@ -105,7 +104,8 @@ void write_ascii_art(const std::vector<unsigned char>& greysMap, int lineWidth,
  */
 struct Options {
   //std::string asciiPallette = "@#£=+|:. ";
-  std::string asciiPalette = "@O=-*,. " ;
+  //std::string asciiPalette = "@O=-*,. " ;
+  std::string asciiPalette = "@#8&o:*. " ;
   std::string inputFilePath;
   std::string outputFilePath = "output.txt";
   std::string url;
@@ -152,7 +152,10 @@ Options parse_variable_map(opt::variables_map& vm) {
 void download_image(const std::string& url, cimg_library::CImg<unsigned char>& dst) {
   std::cout << "Making a network call.." << std::endl;
 
-  std::ofstream ofs(TMP_FILE, std::ios::binary);
+  // Open filestream on new tmp file
+  char tmpl[L_tmpnam] = "/var/tmp/img2ascii.XXXXXX";
+  char* tmpf = mktemp(tmpl);
+  std::ofstream ofs(tmpf, std::ios::binary);
 
   // Make the network call and write the results to a tmp file.
   try {
@@ -162,25 +165,28 @@ void download_image(const std::string& url, cimg_library::CImg<unsigned char>& d
     myRequest.setOpt<curlpp::options::WriteStream>(&ofs);
     myRequest.perform();
     ofs.close();
+    std::cout << "Written network response to " << tmpf << std::endl;
   } catch (curlpp::RuntimeError &e) {
     std::cerr << "Could not connect to " << url << std::endl;
     std::cout << e.what() << std::endl;
+    std::remove(tmpf);
     exit(1);
   } catch (curlpp::LogicError &e) {
     std::cout << e.what() << std::endl;
+    std::remove(tmpf);
     exit(1);
   }
 
   // Read the tmpfile into the destination cimg object
   cimg_library::cimg::exception_mode(0); // Throw exceptions quietly.
   try {
-    dst.load(TMP_FILE);
+    dst.load(tmpf);
   } catch(cimg_library::CImgException &e) {
     std::cerr << "Not a valid image." << std::endl;
-    std::remove(TMP_FILE);
+    std::remove(tmpf);
     exit(1);
   }
-  std::remove(TMP_FILE);
+  std::remove(tmpf);
 }
 
 
