@@ -20,15 +20,18 @@ Here's a simple usage example:
 `img2ascii -u http://url.to.img.jpg` => this will download the image to a temp file, read from it, delete that temp file and save the ASCII art to output.txt
 
 The options:
-  -f [ --file ] arg       The input file path in jpeg format. If a file is
-                          given, any passed in url's will be ignored.
-  -u [ --url ] arg        A url hosting the image.
-  -o [ --output ] arg     The output file path.
-  -r [ --resolution ] arg The chunk resolution. How many pixels will go in one
-                          output character. Cannot be a negative number.
-  --palette arg           A custom string representing all ASCII characters to
-                          be used in the output. Order the characters from
-                          'dark' to 'light', e.g.: '@O=-*,. '. Cannot be empty.
-  -h [ --help ]           Produce help message
+* `-f [ --file ] arg`
+The input file path in jpeg format. If a file is given, any passed in url's will be ignored.
+* `-u [ --url ] arg`
+A url hosting the image.
+* `-o [ --output ] arg`
+The output file path.
+* `-r [ --resolution ] arg`
+The chunk resolution. How many pixels will go in one output character. Cannot be a negative number.
+* `--palette arg`
+A custom string representing all ASCII characters to be used in the output. Order the characters from 'dark' to 'light', e.g.: '@O=-*,. '. Cannot be empty.
+* `--help ]`
+Produce help message`
+
 
 
