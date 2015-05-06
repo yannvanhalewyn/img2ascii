@@ -7,9 +7,9 @@ Installing
 ----------
 
 There's a simple make file in the repo. Mac user's can just run 'make' to build the project. Dependencies are:
-  boost       - for boost::program_options
-  curlpp      - a library for c++ to execute HTTP requests
-  cimg        - A c++ library for parsing images
+  * boost       - for boost::program_options
+  * curlpp      - a library for c++ to execute HTTP requests
+  * cimg        - A c++ library for parsing images
 
 Using
 -----
