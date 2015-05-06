@@ -7,7 +7,7 @@ LDLFLAGS = -L/opt/X11/lib -lX11 -I/opt/X11/include -lboost_program_options
 
 # Dirs and files
 BINDIR = bin/
-EXEC = jpg2ascii
+EXEC = img2ascii
 EXEC := $(addprefix $(BINDIR), $(EXEC))
 
 $(EXEC): main.cpp
