@@ -3,7 +3,7 @@ CC = g++
 
 # Flags
 CFLAGS = -std=c++11
-LDLFLAGS = -L/opt/X11/lib -lX11 -I/opt/X11/include -lboost_program_options
+LDLFLAGS = -L/opt/X11/lib -lX11 -I/opt/X11/include -lboost_program_options -lcurlpp -lcurl
 
 # Dirs and files
 BINDIR = bin/
