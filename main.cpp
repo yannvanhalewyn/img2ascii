@@ -190,13 +190,19 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  // Read in the file
+  // Read in the file (local or network)
   cimg_library::CImg<unsigned char> src;
   if (opts.url.empty()) {
     std::cout << "Reading in " << opts.inputFilePath << std::endl;
     src.load(opts.inputFilePath.c_str());
   } else {
     download_image(opts.url, src);
+  }
+
+  // Optimise resolution if none explicitly specified
+  if (!vm.count("resolution")) {
+    const float TARGET_WIDTH = 1200.0f;
+    opts.resolution = ceil(src.width()/TARGET_WIDTH);
   }
 
   // Populate the greyscale map
