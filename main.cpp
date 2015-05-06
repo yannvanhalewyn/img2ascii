@@ -154,6 +154,7 @@ void download_image(const std::string& url, cimg_library::CImg<unsigned char>& d
 
   std::ofstream ofs(TMP_FILE, std::ios::binary);
 
+  // Make the network call and write the results to a tmp file.
   try {
     curlpp::Cleanup myCleanup;
     curlpp::Easy myRequest;
@@ -162,12 +163,23 @@ void download_image(const std::string& url, cimg_library::CImg<unsigned char>& d
     myRequest.perform();
     ofs.close();
   } catch (curlpp::RuntimeError &e) {
+    std::cerr << "Could not connect to " << url << std::endl;
     std::cout << e.what() << std::endl;
+    exit(1);
   } catch (curlpp::LogicError &e) {
     std::cout << e.what() << std::endl;
+    exit(1);
   }
-  dst.load(TMP_FILE);
 
+  // Read the tmpfile into the destination cimg object
+  cimg_library::cimg::exception_mode(0); // Throw exceptions quietly.
+  try {
+    dst.load(TMP_FILE);
+  } catch(cimg_library::CImgException &e) {
+    std::cerr << "Not a valid image." << std::endl;
+    std::remove(TMP_FILE);
+    exit(1);
+  }
   std::remove(TMP_FILE);
 }
 
@@ -194,7 +206,13 @@ int main(int argc, char *argv[])
   cimg_library::CImg<unsigned char> src;
   if (opts.url.empty()) {
     std::cout << "Reading in " << opts.inputFilePath << std::endl;
-    src.load(opts.inputFilePath.c_str());
+    cimg_library::cimg::exception_mode(0); // Throw exceptions quietly.
+    try {
+      src.load(opts.inputFilePath.c_str());
+    } catch(cimg_library::CImgException &e) {
+      std::cerr << opts.inputFilePath << " is not a valid image." << std::endl;
+      return 1;
+    }
   } else {
     download_image(opts.url, src);
   }
