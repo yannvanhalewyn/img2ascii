@@ -12,7 +12,3 @@ EXEC := $(addprefix $(BINDIR), $(EXEC))
 
 $(EXEC): main.cpp
 	$(CC) $(CFLAGS) $< -o $@ $(LDLFLAGS)
-
-run: $(EXEC)
-	@./$(EXEC) -f test_imgs/mona_lisa.jpg
-
