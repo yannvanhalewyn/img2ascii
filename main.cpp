@@ -50,7 +50,7 @@ to 'light', e.g.: '@O=-*,. '. Cannot be empty.")
   opt::notify(vm);
   if (vm.count("help")) {
     std::cout << desc << std::endl;
-    exit(1);
+    exit(0);
   }
   return vm;
 }
@@ -62,8 +62,11 @@ to 'light', e.g.: '@O=-*,. '. Cannot be empty.")
  */
 std::vector<unsigned char> generate_greyscale_map(const cimg_library::CImg<unsigned char>& src,
     int resolution = 1) {
-  std::cout << "Populating the greyscale map." << std::endl;
+  std::cout << "Populating the greyscale map - " <<
+    "Width: " << src.width() << " | Height: " << src.height() <<std::endl;
   std::vector<unsigned char> greysMap;
+  int required_memory = ceil((float)src.width()/resolution) * ceil((float)src.height()/resolution);
+  greysMap.reserve(required_memory);
   for (int i = 0; i < src.height(); i+=resolution) {
     for (int j = 0; j < src.width(); j+=resolution) {
       int grey = src(j,i,0,0)*RED_COEFF + src(j,i,0,1)*GREEN_COEFF +
@@ -99,6 +102,7 @@ void write_ascii_art(const std::vector<unsigned char>& greysMap, int lineWidth,
     }
   }
   ofs.close();
+  std::cout << "Written " << greysMap.size() << " characters to file!" << std::endl;
 }
 
 /*
