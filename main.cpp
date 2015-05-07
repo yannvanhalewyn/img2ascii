@@ -163,6 +163,7 @@ void download_image(const std::string& url, cimg_library::CImg<unsigned char>& d
     curlpp::Easy myRequest;
     myRequest.setOpt<curlpp::options::Url>(url);
     myRequest.setOpt<curlpp::options::WriteStream>(&ofs);
+    myRequest.setOpt(curlpp::options::FollowLocation(true));
     myRequest.perform();
     ofs.close();
     std::cout << "Written network response to " << tmpf << std::endl;
