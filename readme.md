@@ -26,6 +26,8 @@ The options:
 The input file path in jpeg format. If a file is given, any passed in url's will be ignored.
 * `-u [ --url ] arg`
 A url hosting the image.
+* `--facebook arg`
+A facebook username or profile ID. img2ascii will
 * `-o [ --output ] arg`
 The output file path.
 * `-r [ --resolution ] arg`
@@ -34,6 +36,4 @@ The chunk resolution. How many pixels will go in one output character. Cannot be
 A custom string representing all ASCII characters to be used in the output. Order the characters from 'dark' to 'light', e.g.: '@O=-*,. '. Cannot be empty.
 * `--help ]`
 Produce help message`
-
-
 

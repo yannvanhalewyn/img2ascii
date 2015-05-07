@@ -31,6 +31,8 @@ opt::variables_map parse_arguments(int argc, char *argv[]) {
     ("file,f", opt::value<std::string>(), "The input file path in jpeg format. \
 If a file is given, any passed in url's will be ignored.")
     ("url,u", opt::value<std::string>(), "A url hosting the image.")
+    ("facebook", opt::value<std::string>(), "A facebook username or profile ID. \
+img2ascii will then download that person's most recent facebook profile picture.")
     ("output,o", opt::value<std::string>(), "The output file path.")
     ("resolution,r", opt::value<int>(), "The chunk resulution. How many pixels \
 will go in one output character. Cannot be a negative number.")
@@ -126,6 +128,10 @@ Options parse_variable_map(opt::variables_map& vm) {
   }
   if (vm.count("url")){
     opts.url = vm["url"].as<std::string>();
+  }
+  if (vm.count("facebook")) {
+    opts.url = "http://graph.facebook.com/" + vm["facebook"].as<std::string>() +
+      "/picture?width=1000";
   }
   if (vm.count("output")) opts.outputFilePath = vm["output"].as<std::string>();
   if (vm.count("resolution")) {
